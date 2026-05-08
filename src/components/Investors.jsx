@@ -3,34 +3,44 @@ import { investorMetrics } from '../data/content'
 
 export default function Investors() {
   return (
-    <section id="investors" className="relative py-24 bg-irs-black overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,rgba(201,168,76,0.06),transparent)]" />
-      <div className="container-custom relative z-10 text-center">
-        <ScrollReveal>
-          <span className="label">Investor Relations</span>
-          <h2 className="text-irs-white mt-4 mb-6">A Compelling<br />Investment Case</h2>
-          <p className="text-irs-white/50 max-w-xl mx-auto leading-relaxed mb-12">
-            IRS Group offers investors unparalleled exposure to Nigeria's fastest-growing industrial sectors — from energy transition infrastructure to agriculture and healthcare — underpinned by 72 years of operational excellence.
-          </p>
-        </ScrollReveal>
+    <section id="investors" className="section-shell overflow-hidden bg-irs-black">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_40%,rgba(214,178,94,0.1),transparent)]" />
+      <div className="container-custom">
+        <div className="surface-card-strong p-6 md:p-8 lg:p-10">
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+            <ScrollReveal>
+              <span className="label">Investor Relations</span>
+              <h2 className="mt-4 text-2xl lg:text-5xl text-irs-white">A cleaner, sharper investment narrative.</h2>
+              <p className="mt-5 max-w-2xl text-base leading-8 text-irs-white/58">
+                IRS Group offers exposure to Nigerian sectors with structural demand tailwinds, anchored by longstanding operating history and a portfolio that spans both legacy industry and transition-era infrastructure.
+              </p>
+            </ScrollReveal>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
-          {investorMetrics.map((m, i) => (
-            <ScrollReveal key={i} delay={i * 0.1}>
-              <div className="p-6 md:p-8 bg-white/[0.02] border border-irs-gold/10 rounded hover:border-irs-gold/30 transition-colors">
-                <span className="font-serif text-3xl md:text-4xl font-bold text-irs-gold block">{m.val}</span>
-                <span className="text-[0.7rem] text-irs-white/30 uppercase tracking-wider mt-2 block">{m.lbl}</span>
+            <ScrollReveal delay={0.08}>
+              <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5 text-sm leading-7 text-irs-white/58">
+                Private placements, strategic partnerships, and joint ventures are supported through the investor relations team.
               </div>
             </ScrollReveal>
-          ))}
-        </div>
-
-        <ScrollReveal delay={0.2}>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <a href="#contact" className="btn-primary">Request Investor Pack</a>
-            <a href="#contact" className="btn-ghost">Schedule Management Meeting →</a>
           </div>
-        </ScrollReveal>
+
+          <div className="my-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {investorMetrics.map((metric, index) => (
+              <ScrollReveal key={index} delay={index * 0.08}>
+                <div className="rounded-[28px] border border-white/10 bg-irs-black/28 p-6 text-center">
+                  <span className="block font-serif text-3xl font-bold text-irs-gold md:text-4xl">{metric.val}</span>
+                  <span className="mt-2 block text-[0.7rem] uppercase tracking-[0.24em] text-irs-white/35">{metric.lbl}</span>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <ScrollReveal delay={0.2}>
+            <div className="flex flex-wrap gap-4">
+              <a href="#contact" className="btn-primary">Request investor pack</a>
+              <a href="#contact" className="btn-ghost">Schedule management meeting</a>
+            </div>
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   )

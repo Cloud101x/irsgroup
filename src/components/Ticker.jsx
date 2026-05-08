@@ -2,15 +2,23 @@ import { tickerItems } from '../data/content'
 
 export default function Ticker() {
   const items = [...tickerItems, ...tickerItems]
+
   return (
-    <div className="bg-irs-gold py-3 overflow-hidden">
-      <div className="flex gap-12 animate-ticker whitespace-nowrap w-max">
-        {items.map((item, i) => (
-          <div key={i} className="flex items-center gap-4 font-condensed text-xs font-bold tracking-[0.2em] uppercase text-irs-black">
-            <span>{item}</span>
-            <span className="w-1 h-1 rounded-full bg-irs-black/40" />
+    <div className="border-y border-white/10 bg-irs-black/55 backdrop-blur-xl">
+      <div className="container-custom py-4">
+        <div className="mask-edge-x overflow-hidden">
+          <div className="flex w-max gap-3 whitespace-nowrap animate-ticker">
+            {items.map((item, i) => (
+              <div
+                key={i}
+                className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 font-condensed text-[0.72rem] font-bold uppercase tracking-[0.24em] text-irs-white/72"
+              >
+                <span>{item}</span>
+                <span className="h-1.5 w-1.5 rounded-full bg-irs-gold/80" />
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   )

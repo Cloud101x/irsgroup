@@ -1,33 +1,68 @@
 import ScrollReveal from './ScrollReveal'
 import { sectors } from '../data/content'
-import { ArrowUpRight } from 'lucide-react'
+import {
+  ArrowUpRight,
+  BatteryCharging,
+  Building2,
+  CarFront,
+  Factory,
+  Flame,
+  FlaskConical,
+  Fuel,
+  HeartPulse,
+  Sun,
+  Wheat,
+} from 'lucide-react'
 
 export default function Sectors() {
+  const sectorIcons = {
+    'Clean Energy': Sun,
+    'CNG Infrastructure': Fuel,
+    'Electric Mobility': CarFront,
+    'Solar Manufacturing': BatteryCharging,
+    Agriculture: Wheat,
+    'Oil & Gas': Flame,
+    Manufacturing: Factory,
+    Fertilizer: FlaskConical,
+    'Real Estate': Building2,
+    Healthcare: HeartPulse,
+  }
+
   return (
-    <section id="sectors" className="py-24 bg-irs-black">
+    <section id="sectors" className="section-shell bg-irs-black">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(214,178,94,0.08),transparent_40%)]" />
       <div className="container-custom">
-        <ScrollReveal className="section-header text-center">
+        <ScrollReveal className="section-header mx-auto text-center">
           <span className="label">Our Business Portfolio</span>
-          <h2 className="text-irs-white mt-4">Ten Pillars of<br />Nigerian Enterprise</h2>
-          <p className="section-sub mx-auto">From clean energy infrastructure to agricultural transformation, IRS Group's diversified portfolio addresses Nigeria's most critical economic imperatives.</p>
+          <h2 className="mt-4 lg:text-2xl text-irs-white">Ten operating verticals, one integrated platform.</h2>
+          <p className="section-sub mx-auto">
+            The portfolio is built to balance long-horizon infrastructure, resilient operating cashflow, and sectors with clear national relevance.
+          </p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-px bg-irs-gold/10 border border-irs-gold/10 mt-12">
-          {sectors.map((s, i) => (
-            <ScrollReveal key={i} delay={i * 0.05}>
-              <div className="group relative bg-irs-black p-6 md:p-8 cursor-pointer h-full hover:-translate-y-1 hover:shadow-2xl transition-all duration-400 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-irs-gold/5 to-irs-green/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-                <div className="relative">
-                  <div className="w-13 h-13 rounded-lg bg-irs-gold/10 border border-irs-gold/20 flex items-center justify-center text-2xl mb-4 group-hover:bg-irs-gold group-hover:border-irs-gold transition-all duration-300">
-                    {s.icon}
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {sectors.map((s, i) => {
+            const Icon = sectorIcons[s.name] || Building2
+
+            return (
+              <ScrollReveal key={i} delay={i * 0.05}>
+                <article className="surface-card group relative h-full overflow-hidden p-6 transition-all duration-300 hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="relative">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-irs-gold/10 text-irs-gold transition-all duration-300 group-hover:border-irs-gold/40 group-hover:bg-irs-gold/16">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h4 className="mt-5 font-serif text-lg text-irs-white">{s.name}</h4>
+                    <p className="mt-3 text-sm leading-7 text-irs-white/52">{s.desc}</p>
+                    <div className="mt-6 flex items-center gap-2 text-sm text-irs-gold/80">
+                      <span>Learn more</span>
+                      <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </div>
                   </div>
-                  <h4 className="font-condensed text-sm font-bold tracking-wider uppercase text-irs-white mb-2">{s.name}</h4>
-                  <p className="text-xs text-irs-white/40 leading-relaxed">{s.desc}</p>
-                  <ArrowUpRight className="absolute bottom-0 right-0 w-4 h-4 text-irs-gold opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all duration-300" />
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
+                </article>
+              </ScrollReveal>
+            )
+          })}
         </div>
       </div>
     </section>

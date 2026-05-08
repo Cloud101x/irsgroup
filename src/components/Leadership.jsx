@@ -2,29 +2,44 @@ import ScrollReveal from './ScrollReveal'
 import { leaders } from '../data/content'
 
 export default function Leadership() {
+  const getInitials = (name) =>
+    name
+      .split(' ')
+      .filter(Boolean)
+      .slice(-2)
+      .map((part) => part[0]?.toUpperCase())
+      .join('')
+
   return (
-    <section id="leadership" className="py-24 bg-irs-off-black">
+    <section id="leadership" className="section-shell bg-irs-off-black/45">
       <div className="container-custom">
         <ScrollReveal className="section-header">
           <span className="label">Corporate Leadership</span>
-          <h2 className="text-irs-white mt-4">Guided by Vision,<br />Driven by Purpose</h2>
-          <p className="section-sub">IRS Group's leadership team brings together Nigeria's most experienced executives in energy, finance, agriculture, and industrial development.</p>
+          <h2 className="mt-4 text-2xl lg:text-5xl text-irs-white">Leadership built for stewardship and execution.</h2>
+          <p className="section-sub">
+            The executive team blends family continuity, institutional knowledge, and sector expertise across energy, finance, agriculture, and industry.
+          </p>
         </ScrollReveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-          {leaders.map((l, i) => (
-            <ScrollReveal key={i} delay={i * 0.1}>
-              <div className="group bg-white/[0.03] border border-white/[0.06] rounded overflow-hidden hover:-translate-y-2 hover:border-irs-gold/40 hover:shadow-2xl transition-all duration-400">
-                <div className="relative h-60 overflow-hidden">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${l.bg} transition-transform duration-500 group-hover:scale-110`} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {leaders.map((leader, index) => (
+            <ScrollReveal key={index} delay={index * 0.1}>
+              <article className="surface-card group h-full p-6 transition-all duration-300 hover:-translate-y-1">
+                <div className="flex items-start justify-between gap-4">
+                  <div className={`flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br ${leader.bg} font-serif text-xl font-bold text-white shadow-[0_16px_32px_rgba(2,10,18,0.25)]`}>
+                    {getInitials(leader.name)}
+                  </div>
+                  <div className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.24em] text-irs-white/40">
+                    Executive
+                  </div>
                 </div>
-                <div className="p-5">
-                  <h4 className="font-serif text-lg text-irs-white">{l.name}</h4>
-                  <div className="text-xs text-irs-gold tracking-wider uppercase mt-1 mb-3">{l.role}</div>
-                  <p className="text-xs text-irs-white/40 leading-relaxed">{l.bio}</p>
+
+                <div className="mt-6">
+                  <h4 className="font-serif text-xl text-irs-white">{leader.name}</h4>
+                  <div className="mt-2 text-[0.72rem] uppercase tracking-[0.24em] text-irs-gold">{leader.role}</div>
+                  <p className="mt-4 text-sm leading-7 text-irs-white/52">{leader.bio}</p>
                 </div>
-              </div>
+              </article>
             </ScrollReveal>
           ))}
         </div>

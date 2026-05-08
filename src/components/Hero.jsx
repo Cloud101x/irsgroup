@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { carouselSlides, heroStats, activeSectors } from '../data/content'
 
 export default function Hero() {
@@ -9,12 +9,11 @@ export default function Hero() {
   const progressRef = useRef(null)
   const intervalRef = useRef(null)
   const INTERVAL = 5000
+  const currentSlide = carouselSlides[current]
 
   const goTo = useCallback((n) => {
-    setCurrent((prev) => {
-      const total = carouselSlides.length
-      return (n + total) % total
-    })
+    const total = carouselSlides.length
+    setCurrent((n + total) % total)
   }, [])
 
   useEffect(() => {
@@ -47,104 +46,176 @@ export default function Hero() {
   }, [current, goTo])
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Carousel */}
+    <section id="hero" className="relative flex min-h-screen items-center overflow-hidden pt-24">
       <div
         className="absolute inset-0 z-0"
         onMouseEnter={() => setUserPaused(true)}
         onMouseLeave={() => setUserPaused(false)}
       >
-        <div className="flex h-full w-full">
+        <div className="h-full w-full">
           {carouselSlides.map((slide, i) => (
             <div
               key={i}
               className={`absolute inset-0 transition-opacity duration-1000 ${i === current ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
             >
-              <div className={`absolute inset-0 overflow-hidden transition-transform duration-[8000ms] ${i === current ? 'scale-100' : 'scale-110'}`}>
+              <div className={`absolute inset-0 overflow-hidden transition-transform duration-[7000ms] ${i === current ? 'scale-100' : 'scale-110'}`}>
                 <img
                   src={slide.src}
                   alt={slide.alt}
                   loading={i === 0 ? 'eager' : 'lazy'}
                   className="w-full h-full object-cover"
-                  onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement.style.background = 'linear-gradient(135deg,#1B4332,#0a0a0a)' }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                    e.currentTarget.parentElement.style.background = 'linear-gradient(135deg,#123B34,#06111C)'
+                  }}
                 />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-irs-black/90 via-irs-black/50 to-irs-black/70" />
-              <div className="absolute inset-0 bg-gradient-to-t from-irs-black/70 via-transparent to-transparent" />
-              <div className={`absolute bottom-20 left-8 z-20 flex items-center gap-3 transition-opacity duration-700 delay-300 ${i === current ? 'opacity-100' : 'opacity-0'}`}>
-                <div className="w-6 h-px bg-irs-gold" />
-                <span className="font-condensed text-[0.65rem] font-bold tracking-[0.25em] uppercase text-irs-white/60">{slide.text}</span>
-              </div>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(214,178,94,0.18),transparent_20%)]" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#05111d]/95 via-[#071827]/78 to-[#06111c]/62" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#06111c]/92 via-transparent to-transparent" />
             </div>
           ))}
         </div>
       </div>
 
-      {/* Navigation */}
-      <button onClick={() => goTo(current - 1)} className="hidden md:flex absolute left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-irs-white/80 items-center justify-center hover:bg-irs-gold hover:border-irs-gold hover:text-irs-black transition-all backdrop-blur-md">
-        <ChevronLeft className="w-5 h-5" />
-      </button>
-      <button onClick={() => goTo(current + 1)} className="hidden md:flex absolute right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-irs-white/80 items-center justify-center hover:bg-irs-gold hover:border-irs-gold hover:text-irs-black transition-all backdrop-blur-md">
-        <ChevronRight className="w-5 h-5" />
-      </button>
-
-      <div className="absolute bottom-0 left-0 h-[3px] bg-irs-gold z-20" ref={progressRef} style={{ width: '0%' }} />
-
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-        {carouselSlides.map((_, i) => (
-          <button key={i} onClick={() => goTo(i)} className={`h-[3px] rounded transition-all duration-400 ${i === current ? 'w-10 bg-irs-gold' : 'w-6 bg-white/30 hover:bg-white/50'}`} aria-label={`Go to slide ${i + 1}`} />
-        ))}
-      </div>
-
-      {/* Content */}
-      <div className="container-custom relative z-10 pt-32 pb-20">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, staggerChildren: 0.15 }}>
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-px bg-irs-gold" />
-              <span className="font-condensed text-xs tracking-[0.3em] uppercase text-irs-gold">Established 1952 · Kano, Nigeria</span>
+      <div className="container-custom relative z-10 py-16 md:py-20">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, staggerChildren: 0.15 }}
+          >
+            <div className="mb-7 flex flex-wrap gap-3">
+              <span className="section-chip">Since 1952</span>
+              <span className="section-chip">Kano-born industrial group</span>
+              <span className="section-chip">Building across 10 sectors</span>
             </div>
-            <h1 className="text-irs-white mb-6">
-              Powering
-              <span className="block text-irs-gold">Africa's</span>
-              Future
+            <h1 className="max-w-3xl lg:text-5xl text-balance text-irs-white">
+              Building the platform behind
+              <span className="mt-3 block text-irs-gold">modern Africa.</span>
             </h1>
-            <p className="text-lg text-irs-white/60 max-w-md mb-10 leading-relaxed">
-              A diversified conglomerate at the forefront of Nigeria's energy transition, agricultural transformation, and industrial renaissance.
+            <p className="mt-6 max-w-xl text-lg leading-8 text-irs-white/68">
+              IRS Group is a diversified Nigerian industrial platform spanning clean energy, CNG infrastructure,
+              agriculture, manufacturing, real estate, and healthcare.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <a href="#about" className="btn-primary">Discover Our Story</a>
-              <a href="#investors" className="btn-ghost">Investor Relations →</a>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <a href="#about" className="btn-primary">
+                Discover the Group
+                <ArrowRight className="h-4 w-4" />
+              </a>
+              <a href="#investors" className="btn-ghost">Explore investor case</a>
+            </div>
+
+            <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
+              {heroStats.map((stat, i) => (
+                <div key={i} className="surface-card group p-4 md:p-5">
+                  <div className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-irs-white/35">
+                    {stat.label}
+                  </div>
+                  <div className="mt-3 font-serif text-3xl font-bold leading-none text-irs-gold md:text-4xl">
+                    {stat.value}
+                  </div>
+                </div>
+              ))}
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="flex flex-col gap-6">
-            <div className="grid grid-cols-2 gap-3">
-              {heroStats.map((stat, i) => (
-                <div key={i} className="group relative bg-white/[0.03] border border-irs-gold/10 rounded p-5 overflow-hidden hover:bg-irs-gold/5 hover:border-irs-gold/40 hover:-translate-y-1 transition-all duration-300">
-                  <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-irs-gold to-transparent" />
-                  <div className="font-serif text-4xl font-bold text-irs-gold leading-none mb-1">{stat.value}</div>
-                  <div className="text-[0.7rem] tracking-wider uppercase text-irs-white/40">{stat.label}</div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <div className="surface-card-strong p-4 md:p-5">
+              <div className="mb-4 flex items-center justify-between gap-4 px-1">
+                <div>
+                  <div className="label">Featured Platform</div>
+                  <p className="mt-2 text-sm leading-7 text-irs-white/55">
+                    Hover to pause the showcase and explore where the group is actively investing.
+                  </p>
                 </div>
-              ))}
-            </div>
-            <div className="bg-irs-green/20 border border-irs-gold/20 rounded p-5 flex flex-col gap-3">
-              <span className="text-[0.65rem] tracking-[0.2em] uppercase text-irs-white/30">Active Sectors</span>
-              {activeSectors.map((s, i) => (
-                <div key={i} className="inline-flex items-center gap-3 px-3 py-1.5 bg-white/[0.04] border border-white/[0.06] rounded-full w-fit hover:bg-irs-gold/10 hover:border-irs-gold/40 transition-all">
-                  <span className="w-2 h-2 rounded-full shrink-0" style={{ background: s.color }} />
-                  <span className="text-sm text-irs-white/70">{s.text}</span>
+                <div className="hidden items-center gap-2 md:flex">
+                  <button
+                    onClick={() => goTo(current - 1)}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-irs-white/70 transition-all hover:border-irs-gold/40 hover:text-irs-gold"
+                    aria-label="Previous slide"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => goTo(current + 1)}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-irs-white/70 transition-all hover:border-irs-gold/40 hover:text-irs-gold"
+                    aria-label="Next slide"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
                 </div>
-              ))}
+              </div>
+
+              <div className="relative overflow-hidden rounded-[30px] border border-white/10">
+                <img src={currentSlide.src} alt={currentSlide.alt} className="aspect-[4/3] w-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-irs-black via-irs-black/20 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
+                  <div className="inline-flex rounded-full border border-white/15 bg-irs-gold/14 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-irs-gold">
+                    {currentSlide.label}
+                  </div>
+                  <p className="mt-3 max-w-md text-base leading-7 text-irs-white/80">{currentSlide.text}</p>
+                </div>
+              </div>
+
+              <div className="mt-4 grid gap-4 md:grid-cols-[1.2fr_0.8fr]">
+                <div className="rounded-[28px] border border-white/10 bg-irs-black/25 p-5">
+                  <div className="mb-4 flex items-center justify-between gap-4">
+                    <span className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-irs-white/35">
+                      Active priorities
+                    </span>
+                    <span className="text-sm text-irs-white/50">
+                      {String(current + 1).padStart(2, '0')} / {String(carouselSlides.length).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2.5">
+                    {activeSectors.map((sector, i) => (
+                      <div
+                        key={i}
+                        className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-irs-white/72"
+                      >
+                        <span className="h-2 w-2 rounded-full" style={{ background: sector.color }} />
+                        <span>{sector.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5">
+                  <div className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-irs-white/35">
+                    Slide progress
+                  </div>
+                  <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white/10">
+                    <div className="h-full rounded-full bg-gradient-to-r from-irs-gold to-irs-gold-light" ref={progressRef} style={{ width: '0%' }} />
+                  </div>
+                  <p className="mt-4 text-sm leading-7 text-irs-white/58">
+                    A portfolio designed around long-term infrastructure, operating resilience, and national relevance.
+                  </p>
+                  <div className="mt-4 flex gap-2 md:hidden">
+                    <button
+                      onClick={() => goTo(current - 1)}
+                      className="flex h-11 flex-1 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-irs-white/75"
+                      aria-label="Previous slide"
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => goTo(current + 1)}
+                      className="flex h-11 flex-1 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-irs-white/75"
+                      aria-label="Next slide"
+                    >
+                      <ChevronRight className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-40">
-        <span className="text-[0.65rem] tracking-[0.2em] uppercase">Scroll</span>
-        <div className="w-px h-10 bg-gradient-to-b from-irs-gold to-transparent animate-scroll-pulse" />
       </div>
     </section>
   )
