@@ -4,9 +4,6 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  corePlugins: {
-    preflight: false,
-  },
   theme: {
     extend: {
       colors: {
@@ -24,17 +21,16 @@ export default {
           white: '#F8F6F1',
           grey: '#9CA3AF',
           'light-grey': '#E5E1D8',
-          accent: '#D4AF37',
         },
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'serif'],
-        sans: ['Barlow', 'sans-serif'],
-        condensed: ['"Barlow Condensed"', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        sans: ['Barlow', 'system-ui', 'sans-serif'],
+        condensed: ['"Barlow Condensed"', 'system-ui', 'sans-serif'],
       },
       animation: {
         'scroll-pulse': 'scrollPulse 2s ease-in-out infinite',
-        'ticker-scroll': 'tickerScroll 30s linear infinite',
+        'ticker': 'ticker 30s linear infinite',
         'map-pulse': 'mapPulse 2s ease-in-out infinite',
       },
       keyframes: {
@@ -42,13 +38,13 @@ export default {
           '0%, 100%': { opacity: '0.3' },
           '50%': { opacity: '1' },
         },
-        tickerScroll: {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(-50%)' },
+        ticker: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
         mapPulse: {
-          '0%, 100%': { opacity: '0.8', r: '6' },
-          '50%': { opacity: '1', r: '8' },
+          '0%, 100%': { opacity: '0.8' },
+          '50%': { opacity: '1' },
         },
       },
     },
